@@ -1,0 +1,15 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Blake Winton -- Implementor/Technologist -- bwinton
+
+# THANKS
+
+    ustwo: for making an amazing game.
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    jQuery, Modernizr

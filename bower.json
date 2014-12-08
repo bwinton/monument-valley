@@ -1,0 +1,27 @@
+{
+  "name": "monument-valley",
+  "version": "0.1.0",
+  "homepage": "https://github.com/bwinton/monument-valley",
+  "authors": [
+    "Blake Winton <bwinton@latte.ca>"
+  ],
+  "description": "A D3-based version of the Monument Valley intro screen.",
+  "main": "index.html",
+  "keywords": [
+    "d3",
+    "monument_valley"
+  ],
+  "license": "MPL2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "~3.5.0",
+    "jquery": "~2.1.1",
+    "modernizr": "~2.8.3"
+  }
+}
