@@ -36,5 +36,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
     <script src="js/vendor/jquery/dist/jquery.min.js" charset="utf-8"></script>
 
     <script src="js/main.js"></script>
+    <script>
+      window.addEventListener("message", function (event) {
+        if (event.data === 'whimsy:enabled') {
+          console.log("Whimsy!", event.data);
+        }
+      }, false);
+    </script>
   </body>
 </html>
