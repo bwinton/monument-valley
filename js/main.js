@@ -14,26 +14,37 @@ const WIDTH = 640;
 const HEIGHT = 758;
 
 const MOUNTAIN_ANIMATION = 2000;
+const GIANT_V = [
+  [0, HEIGHT * 2],
+  [0, HEIGHT/4],
+  [WIDTH/2, 2*HEIGHT/3],
+  [WIDTH, HEIGHT/4],
+  [WIDTH, HEIGHT * 2]
+];
 
+const GIANT_M4 = [
+  [0, HEIGHT * 2],
+  [0, HEIGHT/3],
+  [WIDTH/8, HEIGHT/4],
+  [WIDTH/2, HEIGHT*.56],
+  [7*WIDTH/8, HEIGHT/4],
+  [WIDTH, HEIGHT/3],
+  [WIDTH, HEIGHT * 2]
+];
+
+// Back to front…
 const MOUNTAIN_DATA = [{
-    start: [
-      [0, HEIGHT * 2],
-      [0, HEIGHT/4],
-      [WIDTH/2, 2*HEIGHT/3],
-      [WIDTH, HEIGHT/4],
-      [WIDTH, HEIGHT * 2]
-    ],
+    start: GIANT_M4,
+    offset: [0, -90],
+    end: [0, -20],
+    gradient: [{stop:"0%", colour:"#ADB091"}, {stop: "100%", colour:"#534F45"}]
+  }, {
+    start: GIANT_V,
     offset: [0, -155],
     end: [0, -45],
     gradient: [{stop:"0%", colour:"#578D82"}, {stop: "100%", colour:"#1A2221"}]
   }, {
-    start: [
-      [0, HEIGHT * 2],
-      [0, HEIGHT/4],
-      [WIDTH/2, 2*HEIGHT/3],
-      [WIDTH, HEIGHT/4],
-      [WIDTH, HEIGHT * 2]
-    ],
+    start: GIANT_V,
     offset: [0, -140],
     end: [0, 0],
     gradient: [{stop:"0%", colour:"#98856A"}, {stop: "100%", colour:"#021B21"}]
