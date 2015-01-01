@@ -12,24 +12,41 @@ globalstrict:true, nomen:false, newcap:false */
 
 const WIDTH = 640;
 const HEIGHT = 758;
-const START = [0, HEIGHT];
-const END = [WIDTH, HEIGHT];
 
-var mountains = [
-  {path: [START, [0, HEIGHT/4],
-     [WIDTH/2, 2*HEIGHT/3],
-     [WIDTH, HEIGHT/4], END],
-   gradient: [
-     {stop:"0%", colour:"#98856A"}, {stop: "100%", colour:"#021B21"}
-   ]},
+const MOUNTAIN_ANIMATION = 2000;
+
+const MOUNTAIN_DATA = [{
+    start: [
+      [0, HEIGHT * 2],
+      [0, HEIGHT/4],
+      [WIDTH/2, 2*HEIGHT/3],
+      [WIDTH, HEIGHT/4],
+      [WIDTH, HEIGHT * 2]
+    ],
+    offset: [0, -155],
+    end: [0, -45],
+    gradient: [{stop:"0%", colour:"#578D82"}, {stop: "100%", colour:"#1A2221"}]
+  }, {
+    start: [
+      [0, HEIGHT * 2],
+      [0, HEIGHT/4],
+      [WIDTH/2, 2*HEIGHT/3],
+      [WIDTH, HEIGHT/4],
+      [WIDTH, HEIGHT * 2]
+    ],
+    offset: [0, -140],
+    end: [0, 0],
+    gradient: [{stop:"0%", colour:"#98856A"}, {stop: "100%", colour:"#021B21"}]
+  }
 ];
 var skyColourBottom = "#FFCA9C";
 var skyColourTop = "#1C4A4D";
 
 function draw() {
   var chart = d3.select('.chart');
+  chart.attr({state: 'start'})
   var defs = chart.append('defs');
-  var gradients = defs.selectAll('radialGradient').data(mountains)
+  var gradients = defs.selectAll('radialGradient').data(MOUNTAIN_DATA)
     .enter().append('radialGradient')
     .attr({
       'id': (d, i) => 'mountainGradient' + i,
@@ -46,13 +63,35 @@ function draw() {
       'stop-color': d => d.colour
     });
   chart.style('background', 'linear-gradient(to top, ' + skyColourBottom + ', ' + skyColourTop + ')');
-  chart.selectAll('.mountain').data(mountains)
-    .enter().append('path').classed('mountain', true)
-    .attr({
+  var mountains = chart.selectAll('.mountain');
+  mountains.data(MOUNTAIN_DATA)
+    .enter().append('g').classed('mountain', true)
+    .attr({'transform': d => {
+      return 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'
+    }})
+    .append('path').attr({
       'stroke-width': '1',
       'fill': (d, i) => 'url(#mountainGradient' + i + ')',
-      'd': d => d3.svg.line()(d.path)
+      'd': d => d3.svg.line()(d.start)
     });
+
+  mountains = chart.selectAll('.mountain');
+  chart.on('click', (d,i) => {
+    var state = chart.attr('state');
+    if (state == 'start') {
+      mountains.transition().duration(MOUNTAIN_ANIMATION)
+        .attr({'transform': d => {
+          return 'translate(' + d.end[0] + ','+ d.end[1] + ')'
+        }});
+      chart.attr({state: 'end'});
+    } else if (state == 'end') {
+      mountains.transition().duration(MOUNTAIN_ANIMATION)
+        .attr({'transform': d => {
+          return 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'
+        }});
+      chart.attr({state: 'start'});
+    }
+  });
 }
 
 draw();
