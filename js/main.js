@@ -3,10 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true,
+/* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true,
 strict:true, undef:true, unused:true, curly:true, browser:true, white:true,
-moz:true, esnext:false, indent:2, maxerr:50, devel:true, node:true, boss:true,
+moz:true, esnext:true, indent:2, maxerr:50, devel:true, node:true, boss:true,
 globalstrict:true, nomen:false, newcap:false */
+/* global d3 */
+
 
 "use strict";
 
@@ -14,6 +16,7 @@ const WIDTH = 640;
 const HEIGHT = 758;
 
 const MOUNTAIN_ANIMATION = 2000;
+
 const GIANT_V = [
   [0, HEIGHT * 2],
   [0, HEIGHT/4],
@@ -26,11 +29,22 @@ const GIANT_M4 = [
   [0, HEIGHT * 2],
   [0, HEIGHT/3],
   [WIDTH/8, HEIGHT/4],
-  [WIDTH/2, HEIGHT*.56],
+  [WIDTH/2, HEIGHT*0.56],
   [7*WIDTH/8, HEIGHT/4],
   [WIDTH, HEIGHT/3],
   [WIDTH, HEIGHT * 2]
 ];
+
+/*
+const GIANT_M3 = [
+];
+
+const GIANT_M2 = [
+];
+
+const GIANT_M1 = [
+];
+*/
 
 // Back to front…
 const MOUNTAIN_DATA = [{
@@ -55,7 +69,7 @@ var skyColourTop = "#1C4A4D";
 
 function draw() {
   var chart = d3.select('.chart');
-  chart.attr({state: 'start'})
+  chart.attr({state: 'start'});
   var defs = chart.append('defs');
   var gradients = defs.selectAll('radialGradient').data(MOUNTAIN_DATA)
     .enter().append('radialGradient')
@@ -77,9 +91,7 @@ function draw() {
   var mountains = chart.selectAll('.mountain');
   mountains.data(MOUNTAIN_DATA)
     .enter().append('g').classed('mountain', true)
-    .attr({'transform': d => {
-      return 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'
-    }})
+    .attr({'transform': d => 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'})
     .append('path').attr({
       'stroke-width': '1',
       'fill': (d, i) => 'url(#mountainGradient' + i + ')',
@@ -87,19 +99,15 @@ function draw() {
     });
 
   mountains = chart.selectAll('.mountain');
-  chart.on('click', (d,i) => {
+  chart.on('click', d => {
     var state = chart.attr('state');
-    if (state == 'start') {
+    if (state === 'start') {
       mountains.transition().duration(MOUNTAIN_ANIMATION)
-        .attr({'transform': d => {
-          return 'translate(' + d.end[0] + ','+ d.end[1] + ')'
-        }});
+        .attr({'transform': d => 'translate(' + d.end[0] + ','+ d.end[1] + ')'});
       chart.attr({state: 'end'});
-    } else if (state == 'end') {
+    } else if (state === 'end') {
       mountains.transition().duration(MOUNTAIN_ANIMATION)
-        .attr({'transform': d => {
-          return 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'
-        }});
+        .attr({'transform': d => 'translate(' + d.offset[0] + ','+ d.offset[1] + ')'});
       chart.attr({state: 'start'});
     }
   });
