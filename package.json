@@ -1,0 +1,19 @@
+{
+  "name": "monument-valley",
+  "version": "1.0.0",
+  "description": "An html version of the Monument Valley intro.",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bwinton/monument-valley.git"
+  },
+  "author": "Blake Winton <bwinton@latte.ca>",
+  "license": "MPLv2",
+  "bugs": {
+    "url": "https://github.com/bwinton/monument-valley/issues"
+  },
+  "homepage": "https://github.com/bwinton/monument-valley"
+}
